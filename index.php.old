@@ -1,0 +1,92 @@
+<?php ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+    td {
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <h4 class="text-center mt-4">Customer Detail</h4>
+        <div class="row">
+            <?php 
+		   $ch = curl_init();
+		   
+		   $url = "https://jsonplaceholder.typicode.com/comments";
+		   
+		   curl_setopt($ch, CURLOPT_URL, $url);
+		   // This option will return data as a string instead of direct output
+		   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		   $curl_data = curl_exec($ch);
+		   curl_close($ch);
+		   $response_data = json_decode($curl_data);
+		   $user_data = $response_data;
+		   
+
+		   
+		    echo "<table class='table table-striped  table-sm mt-2'>";
+			 echo "<thead class='thead-dark'>";
+			   echo"<tr class=''>";
+						echo"<th>Album ID</th>";
+						echo"<th>Ttile</th>";
+						echo"<th>URL</th>";
+	                    echo"<th>Thumbnail</th>";
+                       echo"</tr>";	
+				 echo "<head>";	   
+            foreach ($user_data as  $user) 
+			   {
+				
+					  echo"<body>"; 
+					   echo"<tr>";
+					   
+						echo"<td>".$user->id.   "</td>";
+	                    echo"<td>".$user->name."</td>";
+						echo"<td>".$user->email."</td>";
+	                    echo"<td>".$user->body."></td>";
+                       echo"</tr>";	
+					  echo"</body>";   
+					   
+					
+			   }
+			   echo"</table>";
+		     ?>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+$ch = curl_init();
+
+curl_setopt($ch,CURLOPT_URL,'https://jsonplaceholder.typicode.com/users');
+curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+
+if (curl_errno($ch)) echo curl_error($ch);
+//else $decoded = json_decode($response, true);
+//var_dump($decoded);
+$data = json_decode( file_get_contents('https://jsonplaceholder.typicode.com/users'), true );
+echo $data['name'];
+
+
+
+curl_close($ch);
